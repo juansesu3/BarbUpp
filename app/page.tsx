@@ -122,11 +122,11 @@ export default function Home() {
 
   return (
     <>
-      <nav className="flex justify-between mb-4¿2 border-b border-violet-100 p-4">
+      <nav className="flex justify-between mb-2 border-b border-violet-100 p-2">
         <h1>Calendar</h1>
       </nav>
 
-      <main className="flex min-h-screen flex-col items-center justify-between p-4">
+      <main className="flex min-h-screen flex-col md:flex-row items-center justify-between p-2">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
           headerToolbar={{
@@ -147,7 +147,7 @@ export default function Home() {
 
         <div
           id="draggble-el"
-          className=" w-full border-2 p-2 rounded-md mt-2 lg:h-1/2 bg-violet-50"
+          className=" w-full md:w-52 border-2 p-2 rounded-md mt-2 lg:h-1/2 bg-violet-50"
         >
           <h1 className="font-bold text-lg text-center ">Drag Event</h1>
           {events.map((event) => (
