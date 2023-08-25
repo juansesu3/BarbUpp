@@ -52,6 +52,33 @@ export default function Home() {
     }
   }, []);
 
+  const handleDateCLick = (arg: { date: Date; allDay: boolean }) => {
+    setNewEvent({
+      ...newEvent,
+      start: arg.date,
+      allDay: arg.allDay,
+      id: new Date().getTime(),
+    });
+    setShowModal(true);
+  };
+
+  const addEvent = (data: DropArg) => {
+    console.log("Data >> ", data)
+    const event = {
+      ...newEvent,
+      start: data.date.toISOString(),
+      title: data.draggedEl.innerText,
+      allDay: data.allDay,
+      id: new Date().getTime(),
+    };
+    setAllEvents([...allEvents, event]);
+  };
+
+  const handleDeleteModal = (data: { event: { id: string } }) => {
+    setShowDeleteModal(true);
+    setIdToDelete(Number(data?.event?.id));
+  };
+
   return (
     <>
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
@@ -74,9 +101,9 @@ export default function Home() {
               droppable={true}
               selectable={true}
               selectMirror={true}
-              //dateClick={{}}
-              //drop={}
-              //eventClick={}
+              dateClick={handleDateCLick}
+              drop={(data) => addEvent(data)}
+              eventClick={(data) => handleDeleteModal(data)}
             />
           </div>
           <div
