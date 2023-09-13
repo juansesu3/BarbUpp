@@ -1,5 +1,5 @@
 "use client";
-
+import { EventClickArg } from "@fullcalendar/react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, {
@@ -11,6 +11,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import Nav from "@/components/Nav";
 
 interface Event {
   title: string;
@@ -120,13 +121,21 @@ export default function Home() {
     });
   };
 
+  function renderEventContent(eventInfo: EventClickArg) {
+    return (
+      <>
+        <div className=" ">
+          <p>{eventInfo.event.title}</p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
-      <nav className="flex justify-between mb-2 border-b border-violet-100 p-2">
-        <h1>Calendar</h1>
-      </nav>
+      <Nav />
 
-      <main className="flex min-h-screen flex-col md:flex-row items-center justify-between p-2">
+      <main className="flex h-full flex-col md:flex-row items-center justify-center p-2">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
           headerToolbar={{
@@ -134,17 +143,27 @@ export default function Home() {
             center: "title",
             right: "dayGridMonth, timeGridWeek",
           }}
+          eventContent={renderEventContent}
           events={allEvents}
           nowIndicator={true}
           editable={true}
           droppable={true}
           selectable={true}
           selectMirror={true}
+          initialView="timeGridWeek"
           dateClick={handleDateCLick}
           drop={(data) => addEvent(data)}
           eventClick={(data) => handleDeleteModal(data)}
+          height={800} 
+          slotLabelFormat={{
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false // Utiliza el formato de 24 horas
+          }}
+          slotDuration="00:30:00"  // Cada ranura dura 30 minutos
+          slotLabelInterval="00:30:00" // Las etiquetas se muestran cada 30 minutos
         />
-
+        {/*}
         <div
           id="draggble-el"
           className=" w-full md:w-52 border-2 p-2 rounded-md mt-2 lg:h-1/2 bg-violet-50"
@@ -160,7 +179,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-
+          */}
         <Transition.Root show={showDeleteModal} as={Fragment}>
           <Dialog
             as="div"
@@ -207,7 +226,7 @@ export default function Home() {
                         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                           <Dialog.Title
                             as="h3"
-                            className="text-base font-semibold leading-6 text-gray-900"
+                            className="text-base font-semibold leading-6 text-red-500"
                           >
                             Delete Event
                           </Dialog.Title>

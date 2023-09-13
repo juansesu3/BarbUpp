@@ -4,7 +4,7 @@
 
 
 :root {
-  @apply bg-gray-50;
+  @apply bg-[#f5f7f5];
 }
 
 input {
@@ -40,7 +40,7 @@ input {
 }
 
 .fc .fc-button {
-  @apply bg-violet-800 hover:bg-violet-900;
+  @apply bg-violet-800 hover:bg-violet-900 mt-2;
 }
 
 .fc .fc-button-primary:not(:disabled).fc-button-active {
@@ -52,6 +52,18 @@ input {
 }
 
 .fc-v-event {
-  @apply bg-violet-500 border border-violet-600;
+  @apply bg-violet-500 border w-full border-violet-600 absolute;
 
+}
+
+.fc-timegrid-event-harness {
+  @apply bg-violet-500 h-6 w-full
+}
+
+.fc-day {
+  @apply max-w-md
+}
+
+.fc-toolbar-title {
+  @apply text-xl
 }
